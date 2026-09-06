@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\Admin;
+use App\Models\Category;
 
 class AdminController extends Controller
 {
@@ -81,6 +82,33 @@ class AdminController extends Controller
 
 
 
+    # This function receives a category name from a form,
+    # attaches it to the logged-in admin, saves it to the database,
+    # shows a success message, and then redirects back to the categories page.
+
+    function addCategory(Request $request){
+        // return $request;
+        $admin =  Session::get('admin');
+    
+        $category = new Category;
+        $category->name = $request->category;
+        $category->creator = $admin->name;    
+        
+        if($category->save()) {
+            session::flash('category',"Category ". $request->category. " added successfully");
+        }
+
+        return redirect("admin-categories");
+        }
+
+
+
+
+
+
+
 
 
 }
+
+

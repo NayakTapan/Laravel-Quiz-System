@@ -64,10 +64,11 @@ class AdminController extends Controller
 
 
     function categories(){
+        $categories = Category::get();
         $admin =  Session::get('admin');
         
         if($admin){
-            return view('categories',["name"=>$admin->name]);
+            return view('categories',["name"=>$admin->name,'categories'=>$categories]);
         }else{
             
             return redirect('admin-login');
@@ -88,7 +89,12 @@ class AdminController extends Controller
 
     function addCategory(Request $request){
         // return $request;
-        $admin =  Session::get('admin');
+        # validation 
+        $validation = $request -> validate([
+            'category' => 'required|min:3 |unique:categories,name',
+        ]);
+ 
+        $admin =  Session::get('admin'); 
     
         $category = new Category;
         $category->name = $request->category;
@@ -102,7 +108,19 @@ class AdminController extends Controller
         }
 
 
+        function deleteCategory($id){
+            // return $id;
+            $isCategory = Category::find($id)->delete();
+            
 
+            if($isCategory){
+                Session::flash('category',"Category deleted successfully");
+            }
+
+            return redirect("admin-categories");
+
+        }
+        
 
 
 

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\Admin;
 use App\Models\Category;
+use App\Models\Quiz;
 
 class AdminController extends Controller
 {
@@ -122,6 +123,33 @@ class AdminController extends Controller
         }
         
 
+
+        function addQuiz(){
+            // return Session::get('quizDetails');
+            $admin =  Session::get('admin');
+            $categories = Category::get();
+
+            
+            if($admin){
+                $quizName = request('quiz');
+                $category_id = request('category_id');
+
+                if($quizName && $category_id && !Session::has('quizDetails')){
+                    $quiz = new Quiz();
+                    $quiz-> name = $quizName;
+                    $quiz-> category_id = $category_id;
+
+                    if($quiz->save()){
+                        Session::put('quizDetails',$quiz);
+                    }
+                }
+
+                return view('add-quiz',["name"=>$admin->name,'categories'=>$categories]);
+            }else{
+                
+                return redirect('admin-login');
+            }
+        }
 
 
 

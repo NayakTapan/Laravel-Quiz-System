@@ -20,7 +20,7 @@
             @csrf
             <div>
                 {{-- <label for="" class="text-gray-600 mb-1">Add Category</label> --}}
-                <input type="text"placeholder="Enter Quiz name" name="quiz"
+                <input type="text"placeholder="Enter Quiz name" required name="quiz"
                 class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none">
             </div>
 
@@ -51,39 +51,62 @@
             @csrf
                 <textarea type="text"placeholder="Enter Your Question name" name="question"
                 class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none"></textarea>
+                    @error('question')
+                    <div class="text-red-500">{{$message}}</div>
+                    @enderror
             </div>
+
 
             <div>
                 <input type="text"placeholder="Enter First Option name" name="a"
                 class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none">
+                @error('a')
+                <div class="text-red-500">{{$message}}</div>
+                @enderror
             </div>
+
             <div>
                 <input type="text"placeholder="Enter Second Option name" name="b"
                 class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none">
+                @error('b')
+                <div class="text-red-500">{{$message}}</div>
+                @enderror
             </div>
+
             <div>
                 <input type="text"placeholder="Enter Third Option name" name="c"
                 class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none">
+                @error('c')
+                <div class="text-red-500">{{$message}}</div>
+                @enderror
             </div>
+
             <div>
                 <input type="text"placeholder="Enter Forth Option name" name="d"
                 class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none">
+                @error('d')
+                <div class="text-red-500">{{$message}}</div>
+                @enderror
             </div>
 
             <div>
                 <select name="correct_ans"
                 class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none">
-                <option>Select Right Answer</option>
+                <option value="">Select Right Answer</option>
                 <option value="a">A</option>
                 <option value="b">B</option>
                 <option value="c">C</option>
                 <option value="d">D</option>
-
                 </select>
+
+                @error('correct_ans')
+                <div class="text-red-500">{{$message}}</div>
+                @enderror
             </div>
+
             <button type="submit" name="submit" value="add-more" class="w-full bg-blue-500 rounded-xl px-4 py-2 text-white" >Add More</button>
             <button type="submit" name="submit" value="done" class="w-full bg-green-500 rounded-xl px-4 py-2 text-white" >Add And Submit</button>
-
+            <a class="w-full bg-red-500 block text-center rounded-xl px-4 py-2 text-white" href="end-quiz">Finish Quiz</a>
 
         </form>
         @endif
